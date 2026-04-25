@@ -1,0 +1,33 @@
+{
+	"host":               "",
+	"port":               119,
+	"ssl":                false,
+	"ignore-cert":        false,
+	"user":               "",
+	"password":           "",
+	"connections":        6,
+	
+	"check-connections":  1,
+	"check-tries":        1,
+	"check-delay":        "2s",
+	"check-retry-delay":  "20s",
+	"check-post-tries":   2,
+	"check-queue-cache":  200,
+	
+	"skip-errors":        "post-timeout,post-reject,check-timeout,check-missing",
+	"on-post-timeout":    "retry,strip-hdr=User-Agent,retry,ignore",
+	"connect-retries":    2,
+	"reconnect-delay":    "5s",
+	
+	"post-queue-size":    16,
+	"request-retries":    2,
+	"delete-raw-posts":   true,
+	"input-raw-posts":    true,
+	
+	"post-chunk-size":    "0",
+	"post-fail-reconnect": true,
+	
+	"log-time":           true,
+	"quiet":              false,
+	"progress":           ["tcp:unix:/var/tmp/nyuu-repost.sock"]
+}

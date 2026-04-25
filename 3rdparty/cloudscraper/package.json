@@ -1,0 +1,15 @@
+{
+  "name": "Cloudscraper-proxy",
+  "version": "1.0.0",
+  "description": "Cloudscraper proxy",
+  "license": "CC0-1.0",
+  "author": "Anime Tosho",
+  "main": "index.js",
+  "bin": "index.js",
+  "engines": {
+    "node": ">=0.10"
+  },
+  "dependencies" : {
+    "cloudflare-scraper" : "^1.0.0"
+  }
+}
