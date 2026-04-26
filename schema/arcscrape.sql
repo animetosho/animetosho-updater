@@ -1,4 +1,4 @@
-CREATE TABLE `_state` (
+CREATE TABLE IF NOT EXISTS `_state` (
   `k` enum('nyaasi_upto','nyaasis_upto','nyaasi_upto_upd1','nyaasi_upto_upd2','nyaasi_upto_upd3','nyaasi_upto_upd4','nyaasis_upto_upd1','nyaasis_upto_upd2','nyaasis_upto_upd3','nyaasis_upto_upd4','anidex_upto','anidex_upto_upd1','anidex_upto_upd2','anidex_upto_upd3','anidex_upto_upd4','anidex_user_upto','anidex_user_upto_upd1','anidex_user_upto_upd2','anidex_user_upto_upd3','anidex_user_upto_upd4','anidex_group_upto','anidex_group_upto_upd1','anidex_group_upto_upd2','anidex_group_upto_upd3','anidex_group_upto_upd4','tosho_upto','tosho_upto_upd1','tosho_upto_upd2','tosho_upto_upd3','tosho_upto_upd4','nekobt_upto','nekobt_upto_upd1','nekobt_upto_upd2','nekobt_upto_upd3','nekobt_upto_upd4') NOT NULL,
   `v` bigint(30) unsigned NOT NULL,
   PRIMARY KEY (`k`)
@@ -9,7 +9,7 @@ CREATE TABLE `_state` (
 -- Anidex
 --------------------
 
-CREATE TABLE `anidex_torrent_comments` (
+CREATE TABLE IF NOT EXISTS `anidex_torrent_comments` (
 `_id`  int UNSIGNED NOT NULL AUTO_INCREMENT ,
 `torrent_id`  int UNSIGNED NOT NULL ,
 `user_id`  int UNSIGNED NOT NULL ,
@@ -20,7 +20,7 @@ PRIMARY KEY (`_id`),
 UNIQUE INDEX (`torrent_id`, `date`, `user_id`) -- as we don't have the true ID for the comment, simulate one using what we have; we hope that it's unlikely this will ever duplicate
 ) ENGINE=Aria DEFAULT CHARSET=utf8mb4 PAGE_CHECKSUM=1;
 
-CREATE TABLE `anidex_torrents` (
+CREATE TABLE IF NOT EXISTS `anidex_torrents` (
 `id`  int UNSIGNED NOT NULL ,
 `filename`  varchar(255) NOT NULL ,
 `category`  tinyint NOT NULL ,
@@ -41,7 +41,7 @@ PRIMARY KEY (`id`),
 KEY `uploader_date` (`uploader_id`,`date`)
 ) ENGINE=Aria DEFAULT CHARSET=utf8mb4 PAGE_CHECKSUM=1;
 
-CREATE TABLE `anidex_users` (
+CREATE TABLE IF NOT EXISTS `anidex_users` (
 `id`  int UNSIGNED NOT NULL ,
 `username`  varchar(100) NOT NULL ,
 `language`  tinyint NOT NULL ,
@@ -54,7 +54,7 @@ CREATE TABLE `anidex_users` (
 PRIMARY KEY (`id`)
 ) ENGINE=Aria DEFAULT CHARSET=utf8mb4 PAGE_CHECKSUM=1;
 
-CREATE TABLE `anidex_groups` (
+CREATE TABLE IF NOT EXISTS `anidex_groups` (
 `id`  int NOT NULL ,
 `group_name`  varchar(255) NOT NULL ,
 `tags`  varchar(255) NOT NULL ,
@@ -72,7 +72,7 @@ CREATE TABLE `anidex_groups` (
 PRIMARY KEY (`id`)
 ) ENGINE=Aria DEFAULT CHARSET=utf8mb4 PAGE_CHECKSUM=1;
 
-CREATE TABLE `anidex_group_comments` (
+CREATE TABLE IF NOT EXISTS `anidex_group_comments` (
 `_id`  int UNSIGNED NOT NULL AUTO_INCREMENT ,
 `group_id`  int UNSIGNED NOT NULL ,
 `user_id`  int UNSIGNED NOT NULL ,
@@ -83,7 +83,7 @@ PRIMARY KEY (`_id`),
 UNIQUE INDEX (`group_id`, `date`, `user_id`) -- simulate unique ID
 ) ENGINE=Aria DEFAULT CHARSET=utf8mb4 PAGE_CHECKSUM=1;
 
-CREATE TABLE `anidex_group_members` (
+CREATE TABLE IF NOT EXISTS `anidex_group_members` (
 `group_id` int NOT NULL,
 `user_id` int NOT NULL,
 PRIMARY KEY (`group_id`,`user_id`)
@@ -94,7 +94,7 @@ PRIMARY KEY (`group_id`,`user_id`)
 -- nekoBT
 --------------------
 
-CREATE TABLE `nekobt_torrents` (
+CREATE TABLE IF NOT EXISTS `nekobt_torrents` (
   `id` bigint(30) unsigned NOT NULL,
   `title` varchar(500) NOT NULL,
   `description` text NULL,
@@ -133,7 +133,7 @@ CREATE TABLE `nekobt_torrents` (
   KEY `updated_time` (`updated_time`)
 ) ENGINE=Aria DEFAULT CHARSET=utf8mb4 PAGE_CHECKSUM=1;
 
-CREATE TABLE `nekobt_users` (
+CREATE TABLE IF NOT EXISTS `nekobt_users` (
   `id` bigint(30) unsigned NOT NULL,
   `username` varchar(255) NOT NULL,
   `display_name` varchar(255) NOT NULL,
@@ -144,7 +144,7 @@ CREATE TABLE `nekobt_users` (
   KEY `updated_time` (`updated_time`)
 ) ENGINE=Aria DEFAULT CHARSET=utf8mb4 PAGE_CHECKSUM=1;
 
-CREATE TABLE `nekobt_groups` (
+CREATE TABLE IF NOT EXISTS `nekobt_groups` (
   `id` bigint(30) unsigned NOT NULL,
   `name` varchar(255) NOT NULL,
   `display_name` varchar(255) NOT NULL,
@@ -162,7 +162,7 @@ CREATE TABLE `nekobt_groups` (
 -- Nyaa.si
 --------------------
 
-CREATE TABLE `nyaasi_torrents` (
+CREATE TABLE IF NOT EXISTS `nyaasi_torrents` (
   `id` int(10) unsigned NOT NULL,
   `info_hash` binary(20) NOT NULL,
   `display_name` varchar(255) NOT NULL,
@@ -193,7 +193,7 @@ CREATE TABLE `nyaasi_torrents` (
   FULLTEXT KEY `idx_search` (`idx_search`)*/
 ) ENGINE=Aria DEFAULT CHARSET=utf8mb4 PAGE_CHECKSUM=1;
 
-CREATE TABLE `nyaasi_torrent_comments` (
+CREATE TABLE IF NOT EXISTS `nyaasi_torrent_comments` (
   `id` int(10) unsigned NOT NULL,
   `torrent_id` int(10) unsigned NOT NULL,
   `created_time` int(10) unsigned NOT NULL DEFAULT '0',
@@ -206,7 +206,7 @@ CREATE TABLE `nyaasi_torrent_comments` (
   KEY `torrent_id` (`torrent_id`,`created_time`)
 ) ENGINE=Aria DEFAULT CHARSET=utf8mb4 PAGE_CHECKSUM=1;
 
-CREATE TABLE `nyaasi_users` (
+CREATE TABLE IF NOT EXISTS `nyaasi_users` (
   `name` varchar(255) CHARACTER SET ascii NOT NULL,
   `level` tinyint(4) NOT NULL DEFAULT 0 COMMENT '0=REGULAR, 1=TRUSTED, 2=MODERATOR, 3=SUPERADMIN, -1=BANNED',
   -- `md5` binary(20) DEFAULT NULL COMMENT 'MD5 of user''s email; not updated, so historical info only',
@@ -217,7 +217,7 @@ CREATE TABLE `nyaasi_users` (
 ) ENGINE=Aria DEFAULT CHARSET=utf8mb4 PAGE_CHECKSUM=1;
 
 
-CREATE TABLE `nyaasis_torrents` (
+CREATE TABLE IF NOT EXISTS `nyaasis_torrents` (
   `id` int(10) unsigned NOT NULL,
   `info_hash` binary(20) NOT NULL,
   `display_name` varchar(255) NOT NULL,
@@ -248,7 +248,7 @@ CREATE TABLE `nyaasis_torrents` (
   FULLTEXT KEY `idx_search` (`idx_search`)*/
 ) ENGINE=Aria DEFAULT CHARSET=utf8mb4 PAGE_CHECKSUM=1;
 
-CREATE TABLE `nyaasis_torrent_comments` (
+CREATE TABLE IF NOT EXISTS `nyaasis_torrent_comments` (
   `id` int(10) unsigned NOT NULL,
   `torrent_id` int(10) unsigned NOT NULL,
   `created_time` int(10) unsigned NOT NULL DEFAULT '0',
@@ -265,7 +265,7 @@ CREATE TABLE `nyaasis_torrent_comments` (
 -- Tokyo Tosho
 --------------------
 
-CREATE TABLE `tosho_torrents` (
+CREATE TABLE IF NOT EXISTS `tosho_torrents` (
 `id`  int UNSIGNED NOT NULL ,
 `name`  varchar(255) NOT NULL ,
 `type`  tinyint NOT NULL , -- category

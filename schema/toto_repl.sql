@@ -1,4 +1,4 @@
-CREATE TABLE `toto_toto` (
+CREATE TABLE IF NOT EXISTS `toto_toto` (
 	`id` int(10) unsigned not null auto_increment,
 	`tosho_id` int(10) unsigned not null default 0,
 	`nyaa_id` int(10) unsigned not null default 0,
@@ -72,7 +72,7 @@ CREATE TABLE `toto_toto` (
 	key (`btih`)
 ) ENGINE=Aria CHARACTER SET utf8mb4;
 
-create table `toto_trackers` (
+CREATE TABLE IF NOT EXISTS `toto_trackers` (
 	`id` smallint(5) unsigned not null auto_increment,
 	`url` varchar(250) not null, -- technically should be case sensitive, but a pain to deal with, and I doubt it's actually a problem anywhere; only becomes a problem if the first seen instance of the tracker has bad casing
 	`dead` tinyint(3) not null default 0,
@@ -82,7 +82,7 @@ create table `toto_trackers` (
 	primary key (`id`),
 	unique key (`url`)
 ) ENGINE=Aria CHARACTER SET utf8mb4;
-create table `toto_tracker_stats` (
+CREATE TABLE IF NOT EXISTS `toto_tracker_stats` (
 	`id` int(10) unsigned not null,
 	`tracker_id` smallint(5) unsigned not null,
 	`tier` tinyint(4) DEFAULT NULL,
@@ -99,7 +99,7 @@ create table `toto_tracker_stats` (
 ) ENGINE=Aria CHARACTER SET utf8mb4;
 
 
-create table `toto_files` (
+CREATE TABLE IF NOT EXISTS `toto_files` (
 	`id` int(10) unsigned not null auto_increment,
 	`toto_id` int(10) unsigned not null default 0,
 	
@@ -128,14 +128,14 @@ create table `toto_files` (
 ) ENGINE=Aria CHARACTER SET utf8mb4;
 
 
-create table `toto_fileinfo` (
+CREATE TABLE IF NOT EXISTS `toto_fileinfo` (
 	`fid` int(10) unsigned not null,
 	`type` varchar(10) not null,
 	`info` mediumblob not null,
 	primary key (`fid`,`type`)
 ) ENGINE=Aria CHARACTER SET utf8mb4;
 
-create table `toto_filelinks` (
+CREATE TABLE IF NOT EXISTS `toto_filelinks` (
 	`fid` int(10) unsigned not null,
 	`links` blob not null,
 	/*
@@ -151,7 +151,7 @@ create table `toto_filelinks` (
 	primary key (`fid`)
 ) ENGINE=Aria CHARACTER SET utf8mb4;
 
-create table `toto_attachment_files` (
+CREATE TABLE IF NOT EXISTS `toto_attachment_files` (
 	`id` int(10) unsigned not null auto_increment,
 	`hash` binary(20) not null,
 	`filesize` int(10) unsigned not null,
@@ -162,7 +162,7 @@ create table `toto_attachment_files` (
 	unique key (`hash`)
 ) ENGINE=Aria CHARACTER SET utf8mb4;
 
-create table `toto_attachments` (
+CREATE TABLE IF NOT EXISTS `toto_attachments` (
 	`fid` int(10) unsigned not null,
 	`attachments` blob not null,
 	/*
@@ -190,7 +190,7 @@ create table `toto_attachments` (
 ) ENGINE=Aria CHARACTER SET utf8mb4;
 
 
-CREATE TABLE `toto_anidb_tvdb` (
+CREATE TABLE IF NOT EXISTS `toto_anidb_tvdb` (
   `anidbid` int(10) unsigned NOT NULL,
   `tvdbid` int(10) unsigned NOT NULL DEFAULT 0,
   `defaulttvdbseason` tinyint(3) DEFAULT NULL,

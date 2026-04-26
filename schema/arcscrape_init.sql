@@ -1,4 +1,4 @@
-INSERT INTO `_state` VALUES
+INSERT IGNORE INTO `_state` VALUES
 	('nyaasi_upto', 0),
 	('nyaasi_upto_upd1', 0),
 	('nyaasi_upto_upd2', 0),

@@ -1,4 +1,4 @@
-CREATE TABLE `toto_torrents` (
+CREATE TABLE IF NOT EXISTS `toto_torrents` (
 	`id` int(10) unsigned not null,
 	`name` varchar(255) not null default "",
 	`hashString` binary(20) not null default "",
@@ -14,14 +14,14 @@ CREATE TABLE `toto_torrents` (
 	key (`totalsize`)
 ) ENGINE=Aria CHARACTER SET utf8mb4;
 
-CREATE TABLE `toto_skip_fetch` (
+CREATE TABLE IF NOT EXISTS `toto_skip_fetch` (
 	`link` varchar(750) not null,
 	`dateline` int(11) not null default 0,
 	primary key (`link`),
 	key (`dateline`)
 ) ENGINE=Memory CHARACTER SET utf8mb4;
 
-create table `toto_toarchive` (
+CREATE TABLE IF NOT EXISTS `toto_toarchive` (
 	`toto_id` int(10) unsigned not null,
 	`torrentname` varchar(255) not null, -- duplicate info for simplicity
 	`files` mediumtext not null,
@@ -37,7 +37,7 @@ create table `toto_toarchive` (
 	key (`status`, `priority`, `dateline`)
 ) ENGINE=Aria CHARACTER SET utf8mb4;
 
-create table `toto_finfo` (
+CREATE TABLE IF NOT EXISTS `toto_finfo` (
 	`fid` int(10) unsigned not null,
 	`filename` varchar(255) not null, -- duplicate info for simplicity
 	
@@ -49,7 +49,7 @@ create table `toto_finfo` (
 	key (`status`, `priority`, `dateline`)
 ) ENGINE=Aria CHARACTER SET utf8mb4;
 
-create table `toto_ulqueue` (
+CREATE TABLE IF NOT EXISTS `toto_ulqueue` (
 	`id` int(10) unsigned not null auto_increment,
 	`fid` int(10) unsigned not null,
 	
@@ -71,7 +71,7 @@ create table `toto_ulqueue` (
 	key (`toto_id`)
 ) ENGINE=Aria CHARACTER SET utf8mb4;
 
-create table `toto_ulqueue_failures` ( -- failure log
+CREATE TABLE IF NOT EXISTS `toto_ulqueue_failures` ( -- failure log
 	`id` int(10) unsigned not null auto_increment,
 	`fid` int(10) unsigned not null,
 	`site` char(50) not null default "",
@@ -81,7 +81,7 @@ create table `toto_ulqueue_failures` ( -- failure log
 	key (`site`, `dateline`)
 ) ENGINE=Aria CHARACTER SET utf8mb4;
 
-create table `toto_ulqueue_status` (
+CREATE TABLE IF NOT EXISTS `toto_ulqueue_status` (
 	`proc` char(10) not null,
 	`ulq_id` int(10) not null default 0,
 	`site` char(50) not null default "",
@@ -91,7 +91,7 @@ create table `toto_ulqueue_status` (
 	primary key (`proc`)
 ) ENGINE=Memory CHARACTER SET utf8mb4;
 
-create table `toto_ulhosts` ( -- upload host stats
+CREATE TABLE IF NOT EXISTS `toto_ulhosts` ( -- upload host stats
 	`site` char(25) not null,
 	-- these aren't used by the script, just collected for stats
 	`lastused` bigint(30) not null default 0,
@@ -104,7 +104,7 @@ create table `toto_ulhosts` ( -- upload host stats
 	primary key (`site`)
 ) ENGINE=Aria CHARACTER SET utf8mb4;
 
-create table `toto_ulservers` ( -- upload server stats
+CREATE TABLE IF NOT EXISTS `toto_ulservers` ( -- upload server stats
 	`server` varchar(100) not null default "", -- subdomain
 	`host` char(25) not null default "",
 	`added` bigint(30) not null default 0, -- date found, only just FYI
@@ -120,7 +120,7 @@ create table `toto_ulservers` ( -- upload server stats
 	key (`host`, `lastfailure`)
 ) ENGINE=Aria CHARACTER SET utf8mb4;
 
-create table `toto_ulserver_failures` ( -- failure log
+CREATE TABLE IF NOT EXISTS `toto_ulserver_failures` ( -- failure log
 	`id` int(10) unsigned not null auto_increment,
 	`server` varchar(100) not null default "",
 	`host` char(25) not null default "",
@@ -132,7 +132,7 @@ create table `toto_ulserver_failures` ( -- failure log
 ) ENGINE=Aria CHARACTER SET utf8mb4;
 
 -- no longer used
-create table `toto_uploader_accounts` (
+CREATE TABLE IF NOT EXISTS `toto_uploader_accounts` (
 	`id` int(10) unsigned not null auto_increment,
 	`host` char(25) not null default "",
 	`cookie` varchar(2048) not null default "",
@@ -144,7 +144,7 @@ create table `toto_uploader_accounts` (
 	key (`host`, `datestart`)
 ) ENGINE=Aria CHARACTER SET utf8mb4;
 
-create table `toto_tracker_scrape_failures` ( -- failure log
+CREATE TABLE IF NOT EXISTS `toto_tracker_scrape_failures` ( -- failure log
 	`id` int(10) unsigned not null auto_increment,
 	`tracker_id` smallint(5) unsigned not null,
 	`dateline` bigint(30) not null default 0,
@@ -153,7 +153,7 @@ create table `toto_tracker_scrape_failures` ( -- failure log
 	key (`tracker_id`, `dateline`)
 ) ENGINE=Aria CHARACTER SET utf8mb4;
 
-create table `toto_adb_resolve_queue` (
+CREATE TABLE IF NOT EXISTS `toto_adb_resolve_queue` (
 	`toto_id` int(11) unsigned not null,
 	`name` varchar(255) not null,
 	`added` bigint(30) not null default 0,
@@ -167,7 +167,7 @@ create table `toto_adb_resolve_queue` (
 	key `process_order` (`priority`,`dateline`)
 ) ENGINE=Aria CHARACTER SET utf8mb4;
 
-create table `toto_adb_aniname_map` (
+CREATE TABLE IF NOT EXISTS `toto_adb_aniname_map` (
 	`nameid` varchar(200) not null,
 	`noep` tinyint(2) not null default 0,
 	`aid` int(10) unsigned not null,
@@ -176,13 +176,13 @@ create table `toto_adb_aniname_map` (
 	primary key (`nameid`,`noep`)
 ) ENGINE=Aria CHARACTER SET utf8mb4;
 
-create table `toto_adb_aniname_alias` (
+CREATE TABLE IF NOT EXISTS `toto_adb_aniname_alias` (
 	`aid` int(10) unsigned not null,
 	`name` varchar(384) not null,
 	primary key (`aid`,`name`)
 ) ENGINE=Aria CHARACTER SET utf8mb4;
 
-CREATE TABLE `toto_fiqueue` (
+CREATE TABLE IF NOT EXISTS `toto_fiqueue` (
 	`id`  int UNSIGNED NOT NULL AUTO_INCREMENT ,
 	`fid`  int UNSIGNED NOT NULL ,
 	`type`  varchar(20) NOT NULL ,
@@ -196,7 +196,7 @@ CREATE TABLE `toto_fiqueue` (
 ) ENGINE=Aria CHARACTER SET utf8mb4;
 
 
-create table `toto_filelinks_active` (
+CREATE TABLE IF NOT EXISTS `toto_filelinks_active` (
 	`id` int(10) unsigned not null auto_increment,
 	`fid` int(10) unsigned not null,
 	`site` varchar(30) not null,
@@ -221,7 +221,7 @@ create table `toto_filelinks_active` (
 	KEY `fid_only` (`fid`)
 ) ENGINE=Aria CHARACTER SET utf8mb4;
 
-CREATE TABLE `toto_newsqueue` (
+CREATE TABLE IF NOT EXISTS `toto_newsqueue` (
 	`id`  int UNSIGNED NOT NULL ,
 	`status`  tinyint NOT NULL DEFAULT 0 , -- 1 = PAR2 creation, 2 = awaiting archive (needs to occur before PAR2 creation, but I've screwed the ordering), 3 = PAR2 done, 4 = uploading
 	`dateline`  bigint NOT NULL,
@@ -232,14 +232,14 @@ CREATE TABLE `toto_newsqueue` (
 	INDEX (`status`, `dateline`) 
 ) ENGINE=Aria CHARACTER SET utf8mb4;
 
-CREATE TABLE `toto_btih_seen` (
+CREATE TABLE IF NOT EXISTS `toto_btih_seen` (
 	`btih` binary(20) not null,
 	`seen` int(11) unsigned not null,
 	primary key (`btih`)
 ) ENGINE=Aria CHARACTER SET utf8mb4;
 
 
-create table `toto_src_cache_init` (
+CREATE TABLE IF NOT EXISTS `toto_src_cache_init` (
 	`url` varchar(80) not null, -- if longer, we won't cache
 	`result` text not null,
 	`dateline` bigint(30) not null default 0,
@@ -247,7 +247,7 @@ create table `toto_src_cache_init` (
 	key (`dateline`)
 ) ENGINE=Aria CHARACTER SET utf8mb4;
 
-create table `toto_src_cache_articlecontent` (
+CREATE TABLE IF NOT EXISTS `toto_src_cache_articlecontent` (
 	`url` varchar(250) not null,
 	`content` text not null,
 	`dateline` bigint(30) not null default 0,
@@ -255,7 +255,7 @@ create table `toto_src_cache_articlecontent` (
 	key (`dateline`)
 ) ENGINE=Aria CHARACTER SET utf8mb4;
 
-create table `toto_src_cache_torlookup` (
+CREATE TABLE IF NOT EXISTS `toto_src_cache_torlookup` (
 	`url` varchar(250) not null,
 	`content` mediumtext not null,
 	`dateline` bigint(30) not null default 0,
@@ -263,7 +263,7 @@ create table `toto_src_cache_torlookup` (
 	key (`dateline`)
 ) ENGINE=Aria CHARACTER SET utf8mb4;
 
-create table `toto_src_cache_ddllookup` (
+CREATE TABLE IF NOT EXISTS `toto_src_cache_ddllookup` (
 	`host` varchar(40) not null,
 	`path` varchar(150) not null,
 	`files` text not null,
@@ -272,7 +272,7 @@ create table `toto_src_cache_ddllookup` (
 	key (`dateline`)
 ) ENGINE=Aria CHARACTER SET utf8mb4;
 
-create table `toto_files_extra` (
+CREATE TABLE IF NOT EXISTS `toto_files_extra` (
 	`fid` int(10) unsigned not null,
 	`vidframes_info` blob,
 	`torpc_sha1_16k` binary(20) default null,
