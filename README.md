@@ -331,3 +331,6 @@ The following scripts I haven’t used in a long time, so they may be out of dat
 * **admin-swapdupe.php**: when a duplicate torrent is encountered (e.g. uploaded to both Nyaa and nekoBT), one of them is marked as a duplicate. This script switches which is marked as a dupe
 * **admin-torrent-tbl.php**: if a torrent in Transmission is missing in *toto_torrents*, try to re-add it
 
+# License
+
+This code (excluding *3rdparty/*) is Public Domain or [CC0](https://creativecommons.org/publicdomain/zero/1.0/legalcode) (or equivalent) if PD isn’t recognised.
